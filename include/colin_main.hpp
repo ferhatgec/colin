@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include "colin_converter.hpp"
+
 #include "defs/colin_defs.hpp"
 
 class Color {
@@ -20,15 +22,19 @@ public:
 };
 
 enum InfoType : const u8 {
-    Name = 1,
-    Rgb  = 3,
+    Name,
+    Rgb = 2,
     Hex,
     Cmyk,
     Hsl,
-    Hsv
+    Hsv,
+    Ascii = 8,
+    Esc
 };
 
 class Colin {
+    Colin_Converter converter;
+
     // Table unicode character
     const std::string table_item = "░░";
 
@@ -41,7 +47,17 @@ class Colin {
     const std::string light_gray = SetColor(171, 171, 171);
     const std::string white      = SetColor(255, 255, 255);
 
+    // Rainbow colors
+    const std::string red        = SetFgColor(255, 0  , 0);
+    const std::string orange     = SetFgColor(255, 165, 0);
+    const std::string yellow     = SetFgColor(255, 255, 0);
+    const std::string green      = SetFgColor(0  , 128, 0);
+    const std::string blue       = SetFgColor(0  , 0, 255);
+    const std::string purple     = SetFgColor(75 , 0, 130);
+    const std::string pink       = SetFgColor(238,130,238);
+
     const std::string reset      = "\033[0m";
+
 
     std::vector<std::string> infos = {
             ""       ,
@@ -50,17 +66,24 @@ class Colin {
             "hex  : ",
             "cmyk : ",
             "hsl  : ",
-            "hsv  : "
+            "hsv  : ",
+            "-----",
+            "ascii: ",
+            "esc  : "
     };
 
     unsigned line = 0;
 
     u32 r = 0, g = 0, b = 0;
+
+    std::string hex;
 public:
     Colin() = default;
     ~Colin()= default;
 
+
     std::string SetColor(u32 r, u32 g, u32 b) noexcept;
+    std::string SetFgColor(u32 r, u32 g, u32 b) noexcept;
 
     void        Newline ();
 

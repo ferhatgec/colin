@@ -39,6 +39,17 @@ std::string Colin::SetColor(u32 r, u32 g, u32 b) noexcept {
         "m";
 }
 
+std::string Colin::SetFgColor(u32 r, u32 g, u32 b) noexcept {
+    return "\033[38;2;"      +
+           std::to_string(r) +
+           ";"               +
+           std::to_string(g) +
+           ";"               +
+           std::to_string(b) +
+           "m";
+}
+
+
 void Colin::Newline() {
     if(this->line < this->infos.size()) {
         std::cout << "   " << this->infos[this->line];
@@ -55,6 +66,7 @@ void Colin::Newline() {
             }
 
             case InfoType::Hex: {
+                std::cout << this->converter.ToHex(this->r, this->g, this->b);
 
                 break;
             }
@@ -73,6 +85,16 @@ void Colin::Newline() {
 
                 break;
             }
+
+            case InfoType::Ascii: {
+
+                break;
+            }
+
+            case InfoType::Esc: {
+
+                break;
+            }
         }
 
         ++this->line;
@@ -88,7 +110,7 @@ void Colin::Init(Color color) noexcept {
 
     this->color_data = SetColor(color.r, color.g, color.b);
 
-    this->infos[0] = "\033[38;2;"  +
+    this->infos[Name] = "\033[38;2;"  +
             std::to_string(this->r)+
             ";"                    +
             std::to_string(this->g)+
@@ -96,6 +118,36 @@ void Colin::Init(Color color) noexcept {
             std::to_string(this->b)+
             "m"                    +
             "color\033[0m: ";
+
+    this->infos[Hex]  = this->red     +
+            "hex  : "               +
+            this->orange           +
+            this->hex;
+
+    this->infos[Cmyk]  = this->orange  +
+            "cmyk : "              +
+            this->yellow           +
+            "work-in-progress";
+
+    this->infos[Hsl]   = this->yellow  +
+            "hsl  : "               +
+            this->green            +
+            "work-in-progress";
+
+    this->infos[Hsv]   = this->green   +
+            "hsv  : "               +
+            this->blue            +
+            "work-in-progress";
+
+    this->infos[Ascii] = this->blue    +
+            "ascii: "               +
+            this->purple            +
+            "work-in-progress";
+
+    this->infos[Esc]   =this->purple+
+            "esc  : "               +
+            this->pink              +
+            "work-in-progress";
 }
 
 void Colin::PrintColorBox(bool split) noexcept {

@@ -4,8 +4,8 @@
 // Distributed under the terms of the MIT License.
 //
 //
-#ifndef COLIN_DEFS_HPP
-#define COLIN_DEFS_HPP
+#ifndef DEFS_COLIN_DEFS_HPP
+#define DEFS_COLIN_DEFS_HPP
 
 #include <cstdint>
 
@@ -21,4 +21,4 @@ using u32 = uint32_t;
 using i64 = int64_t ;
 using u64 = uint64_t;
 
-#endif // COLIN_DEFS_HPP
+#endif // DEFS_COLIN_DEFS_HPP
