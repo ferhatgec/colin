@@ -13,8 +13,12 @@ public:
     Colin_Converter() = default;
     ~Colin_Converter()= default;
 
+    float GetMin(float r, float g, float b) noexcept;
+    float GetMax(float r, float g, float b) noexcept;
+
     std::string ToHex (u32 r, u32 g, u32 b) noexcept;
     std::tuple<std::string, std::string, std::string, std::string> ToCMYK(u32 r, u32 g, u32 b) noexcept;
+    std::tuple<std::string, std::string, std::string>              ToHSL (u32 r, u32 g, u32 b) noexcept;
 };
 
 #endif //COLIN_COLIN_CONVERTER_HPP

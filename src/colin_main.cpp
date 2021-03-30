@@ -103,6 +103,16 @@ void Colin::Newline() {
             }
 
             case InfoType::Hsl: {
+                std::cout <<
+                    "("
+                    "\033[0;31m"           +
+                    std::get<0>(this->hsl)+
+                    this->reset            +
+                    ", \033[0;32m"         +
+                    std::get<1>(this->hsl)+
+                    ", \033[0;34m"         +
+                    std::get<2>(this->hsl)+
+                    ")";
 
                 break;
             }
@@ -156,8 +166,7 @@ void Colin::Init(Color color) noexcept {
 
     this->infos[Hsl]   = this->yellow  +
             "hsl  : "               +
-            this->green            +
-            "work-in-progress";
+            this->green;
 
     this->infos[Hsv]   = this->green   +
             "hsv  : "               +
@@ -176,6 +185,7 @@ void Colin::Init(Color color) noexcept {
 
     this->hex = this->converter.ToHex (this->r, this->g, this->b);
     this->cmyk= this->converter.ToCMYK(this->r, this->g, this->b);
+    this->hsl = this->converter.ToHSL (this->r, this->g, this->b);
 }
 
 void Colin::PrintColorBox(bool split) noexcept {
