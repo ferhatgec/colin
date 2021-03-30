@@ -80,6 +80,7 @@ class Colin {
     std::string hex;
     std::tuple<std::string, std::string, std::string, std::string> cmyk;
     std::tuple<std::string, std::string, std::string>              hsl;
+    std::tuple<std::string, std::string, std::string>              hsv;
 public:
     Colin() = default;
     ~Colin()= default;

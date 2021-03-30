@@ -1,5 +1,8 @@
+// MIT License
 //
-// Created by ferhatgec on 3/30/21.
+// Copyright (c) 2021 Ferhat Geçdoğan All Rights Reserved.
+// Distributed under the terms of the MIT License.
+//
 //
 
 #include <iostream>
@@ -114,7 +117,10 @@ std::tuple<std::string, std::string, std::string> Colin_Converter::ToHSL(u32 r, 
         s = 100 * (max - min) / (2.0f - max - min);
     }
 
-    if(max == _r) {
+    if(_g - _b == 0) {
+        h = 0;
+    }
+    else if(max == _r) {
         h = 60 * (_g - _b) / (max - min);
     }
     else if(max == _g) {
@@ -128,9 +134,76 @@ std::tuple<std::string, std::string, std::string> Colin_Converter::ToHSL(u32 r, 
         h = h + 360;
     }
 
+    h = std::abs(h);
+    s = std::abs(s);
+    l = std::abs(l);
 
     return std::make_tuple(
             std::to_string(std::lround(h)),
             std::to_string(std::lround(s)),
             std::to_string(std::lround(l)));
+}
+
+std::tuple<std::string, std::string, std::string> Colin_Converter::ToHSV(u32 r, u32 g, u32 b) noexcept {
+   float _r = r,
+        _g  = g,
+        _b  = b,
+        copy_r,
+        copy_g,
+        copy_b;
+
+    float h = 0.0f,
+        s,
+        l,
+        min,
+        max,
+        delta;
+
+    _r = _r / 255;
+    _g = _g / 255;
+    _b = _b / 255;
+
+    max = GetMax(_r, _g, _b);
+    min = GetMin(_g, _g, _b);
+
+    delta = max;
+
+    if(min == max) {
+        h = s = 0;
+        return std::make_tuple(
+                std::to_string(0),
+                std::to_string(0),
+                std::to_string(std::lround(delta * 100)));
+    }
+
+    s  = (max - min) / max;
+    copy_r = (max - _r) / (max - min);
+    copy_g = (max - _g) / (max - min);
+    copy_b = (max - _b) / (max - min);
+
+    if(_g - _b == 0) {
+        h = 0;
+    }
+    else if(max == _r) {
+        h = 60 * (_g - _b) / (max - min);
+    }
+    else if(max == _g) {
+        h = 60 * (_b - _r) / (max - min) + 120;
+    }
+    else if(max == _b)  {
+        h = 60 * (_r - _g) / (max - min) + 240;
+    }
+
+    if(h < 0) {
+        h = h + 360;
+    }
+
+    h = std::abs(h);
+    s = std::abs(s);
+    delta = std::abs(delta);
+
+    return std::make_tuple(
+            std::to_string(std::lround(h)),
+            std::to_string(std::lround(s * 100)),
+            std::to_string(std::lround(delta * 100)));
 }
