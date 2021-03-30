@@ -65,7 +65,7 @@ void Colin::Newline() {
                     this->pink     +
                     "rgb"          +
                     this->reset    +
-                    "("            
+                    "("
                     "\033[0;31m"   <<
                     this->r        <<
                     ", \033[0;32m" <<
@@ -79,12 +79,25 @@ void Colin::Newline() {
             }
 
             case InfoType::Hex: {
-                std::cout << this->converter.ToHex(this->r, this->g, this->b);
+                std::cout << this->hex;
 
                 break;
             }
 
             case InfoType::Cmyk: {
+                std::cout <<
+                    "("
+                    "\033[0;31m"           +
+                    std::get<0>(this->cmyk)+
+                    this->reset            +
+                    ", \033[0;32m"         +
+                    std::get<1>(this->cmyk)+
+                    ", \033[0;34m"         +
+                    std::get<2>(this->cmyk)+
+                    ", "                   +
+                    this->pink             +
+                    std::get<3>(this->cmyk)+
+                    ")";
 
                 break;
             }
@@ -139,8 +152,7 @@ void Colin::Init(Color color) noexcept {
 
     this->infos[Cmyk]  = this->orange  +
             "cmyk : "              +
-            this->yellow           +
-            "work-in-progress";
+            this->yellow;
 
     this->infos[Hsl]   = this->yellow  +
             "hsl  : "               +
@@ -161,6 +173,9 @@ void Colin::Init(Color color) noexcept {
             "esc  : "               +
             this->pink              +
             "work-in-progress";
+
+    this->hex = this->converter.ToHex (this->r, this->g, this->b);
+    this->cmyk= this->converter.ToCMYK(this->r, this->g, this->b);
 }
 
 void Colin::PrintColorBox(bool split) noexcept {

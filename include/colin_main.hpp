@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <tuple>
 
 #include "colin_converter.hpp"
 
@@ -77,6 +78,7 @@ class Colin {
     u32 r = 0, g = 0, b = 0;
 
     std::string hex;
+    std::tuple<std::string, std::string, std::string, std::string> cmyk;
 public:
     Colin() = default;
     ~Colin()= default;
