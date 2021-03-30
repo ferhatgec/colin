@@ -40,9 +40,9 @@ class Colin {
     const std::string table_item = "░░";
 
     // Table background color
-    const std::string color = "\033[48;2;";
+    const std::string color      = "\033[48;2;";
 
-    std::string color_data = color;
+    std::string color_data       = color;
 
     // Table colors
     const std::string light_gray = SetColor(171, 171, 171);

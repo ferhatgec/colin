@@ -133,11 +133,13 @@ void Colin::Newline() {
             }
 
             case InfoType::Ascii: {
+                std::cout << "\\033" + this->color_data.erase(0, 1);
 
                 break;
             }
 
             case InfoType::Esc: {
+                std::cout << "\\033";
 
                 break;
             }
@@ -184,13 +186,11 @@ void Colin::Init(Color color) noexcept {
 
     this->infos[Ascii] = this->blue    +
             "ascii: "               +
-            this->purple            +
-            "work-in-progress";
+            this->purple;
 
     this->infos[Esc]   =this->purple+
             "esc  : "               +
-            this->pink              +
-            "work-in-progress";
+            this->pink;
 
     this->hex = this->converter.ToHex (this->r, this->g, this->b);
     this->cmyk= this->converter.ToCMYK(this->r, this->g, this->b);
