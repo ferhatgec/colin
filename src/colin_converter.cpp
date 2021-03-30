@@ -5,11 +5,15 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <sstream>
 #include "../include/colin_converter.hpp"
 
 
 std::string Colin_Converter::ToHex(u32 r, u32 g, u32 b) noexcept {
-    return "#" + std::to_string((r << 16) | (g << 8) | b);
+    std::stringstream stream;
+    stream << std::hex << (r << 16 | g << 8 | b);
+
+    return "#" + stream.str();
 }
 
 std::tuple<std::string, std::string, std::string , std::string> Colin_Converter::ToCMYK(u32 r, u32 g, u32 b) noexcept {
