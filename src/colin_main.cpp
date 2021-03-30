@@ -61,6 +61,19 @@ void Colin::Newline() {
             }
 
             case InfoType::Rgb: {
+                std::cout          <<
+                    this->pink     +
+                    "rgb"          +
+                    this->reset    +
+                    "("            
+                    "\033[0;31m"   <<
+                    this->r        <<
+                    ", \033[0;32m" <<
+                    this->g        <<
+                    ", \033[0;34m" <<
+                    this->b        <<
+                    this->reset    +
+                    ")";
 
                 break;
             }
