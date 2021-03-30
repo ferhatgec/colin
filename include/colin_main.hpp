@@ -19,6 +19,15 @@ public:
     u32 r, g, b;
 };
 
+enum InfoType : const u8 {
+    Name = 1,
+    Rgb  = 3,
+    Hex,
+    Cmyk,
+    Hsl,
+    Hsv
+};
+
 class Colin {
     // Table unicode character
     const std::string table_item = "░░";
@@ -34,26 +43,26 @@ class Colin {
 
     const std::string reset      = "\033[0m";
 
-    const std::vector<std::string> infos = {
-            "color: ",
+    std::vector<std::string> infos = {
+            ""       ,
             "-----"  ,
-            "r    : ",
-            "g    : ",
-            "b    : ",
-            "-----"  ,
+            "\033[0;31mr\033[0;32mg\033[0;34mb\033[0m  : ",
             "hex  : ",
-            "-----"  ,
             "cmyk : ",
-            "-----"  ,
             "hsl  : ",
-            "-----"  ,
             "hsv  : "
     };
+
+    unsigned line = 0;
+
+    u32 r = 0, g = 0, b = 0;
 public:
     Colin() = default;
     ~Colin()= default;
 
     std::string SetColor(u32 r, u32 g, u32 b) noexcept;
+
+    void        Newline ();
 
     void Init           (Color color)         noexcept;
 

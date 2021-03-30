@@ -29,10 +29,6 @@
         this->table_item << \
         this->reset;
 
-#define NEWLINE()           \
-    std::cout            << \
-        '\n';
-
 std::string Colin::SetColor(u32 r, u32 g, u32 b) noexcept {
     return this->color    +
         std::to_string(r) +
@@ -43,8 +39,63 @@ std::string Colin::SetColor(u32 r, u32 g, u32 b) noexcept {
         "m";
 }
 
+void Colin::Newline() {
+    if(this->line < this->infos.size()) {
+        std::cout << "   " << this->infos[this->line];
+
+        switch(this->line) {
+            case InfoType::Name: {
+
+                break;
+            }
+
+            case InfoType::Rgb: {
+
+                break;
+            }
+
+            case InfoType::Hex: {
+
+                break;
+            }
+
+            case InfoType::Cmyk: {
+
+                break;
+            }
+
+            case InfoType::Hsl: {
+
+                break;
+            }
+
+            case InfoType::Hsv: {
+
+                break;
+            }
+        }
+
+        ++this->line;
+    }
+
+    std::cout << '\n';
+}
+
 void Colin::Init(Color color) noexcept {
+    this->r = color.r;
+    this->g = color.g;
+    this->b = color.b;
+
     this->color_data = SetColor(color.r, color.g, color.b);
+
+    this->infos[0] = "\033[38;2;"  +
+            std::to_string(this->r)+
+            ";"                    +
+            std::to_string(this->g)+
+            ";"                    +
+            std::to_string(this->b)+
+            "m"                    +
+            "color\033[0m: ";
 }
 
 void Colin::PrintColorBox(bool split) noexcept {
@@ -66,24 +117,24 @@ void Colin::PrintColorBox(bool split) noexcept {
         TABLE_WHITE     ()
     }
 
-    NEWLINE             ()
+    this->Newline();
 }
 
 void Colin::PrintBox() noexcept {
-    unsigned i;
+    unsigned i, line;
     bool     split;
 
     for(i = 0; i <= 5; i++) {
         TABLE_LIGHT_GRAY()
     }
 
-    NEWLINE()
+    this->Newline();
 
     for(i = 0; i <= 5; i++) {
         TABLE_WHITE     ()
     }
 
-    NEWLINE()
+    this->Newline();
 
     for(i = 0, split = false; i < 6; i++) {
         PrintColorBox(split);
@@ -94,13 +145,13 @@ void Colin::PrintBox() noexcept {
         TABLE_LIGHT_GRAY()
     }
 
-    NEWLINE()
+    this->Newline();
 
     for(unsigned i = 0; i <= 5; i++) {
         TABLE_WHITE()
     }
 
-    NEWLINE()
+    this->Newline();
 }
 
 int main(int argc, char** argv) {
