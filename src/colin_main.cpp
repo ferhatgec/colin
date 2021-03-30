@@ -29,6 +29,22 @@
         this->table_item << \
         this->reset;
 
+void Colin::InitColorName() noexcept {
+    auto iter = this->color_names.find(
+            std::to_string(this->r) +
+            ","                     +
+            std::to_string(this->g) +
+            ","                     +
+            std::to_string(this->b));
+
+    if(iter != this->color_names.end()) {
+        this->color_name = iter->second;
+    }
+    else {
+        this->color_name = "hmmm?";
+    }
+}
+
 std::string Colin::SetColor(u32 r, u32 g, u32 b) noexcept {
     return this->color    +
         std::to_string(r) +
@@ -56,6 +72,7 @@ void Colin::Newline() {
 
         switch(this->line) {
             case InfoType::Name: {
+                std::cout << this->color_name;
 
                 break;
             }
@@ -196,6 +213,8 @@ void Colin::Init(Color color) noexcept {
     this->cmyk= this->converter.ToCMYK(this->r, this->g, this->b);
     this->hsl = this->converter.ToHSL (this->r, this->g, this->b);
     this->hsv = this->converter.ToHSV (this->r, this->g, this->b);
+
+    InitColorName();
 }
 
 void Colin::PrintColorBox(bool split) noexcept {
@@ -221,7 +240,7 @@ void Colin::PrintColorBox(bool split) noexcept {
 }
 
 void Colin::PrintBox() noexcept {
-    unsigned i, line;
+    unsigned i;
     bool     split;
 
     for(i = 0; i <= 5; i++) {
